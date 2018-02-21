@@ -15,14 +15,14 @@ ActiveRecord::Schema.define(version: 20180221201917) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "conversations", force: :cascade do |t|
+    t.string "topic"
+  end
+
   create_table "messages", force: :cascade do |t|
     t.text "content"
     t.integer "user_id"
-    t.integer "thread_id"
-  end
-
-  create_table "threads", force: :cascade do |t|
-    t.string "topic"
+    t.integer "conversation_id"
   end
 
   create_table "users", force: :cascade do |t|
