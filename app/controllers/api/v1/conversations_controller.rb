@@ -19,6 +19,6 @@ class Api::V1::ConversationsController < ApplicationController
   private
 
   def conversation_params
-    params.require(:conversation).permit(:topic)
+    params.permit(:topic)
   end
 end
