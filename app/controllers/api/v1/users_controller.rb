@@ -7,7 +7,10 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-    if user.save
+    foundUser = User.find_by(username: params[:username])
+    if foundUser
+      render json: foundUser
+    else
       render json: user
     end
   end

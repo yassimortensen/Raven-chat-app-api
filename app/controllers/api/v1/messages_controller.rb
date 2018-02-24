@@ -3,13 +3,13 @@ class Api::V1::MessagesController < ApplicationController
   def create
     message = Message.new(message_params)
     conversation = Conversation.find(message_params[:conversation_id])
-    user = User.find(message_params[:user_id])
+    # user = User.find(message_params[:user_id])
     if message.save
       serialized_data = ActiveModelSerializers::Adapter::Json.new(
         MessageSerializer.new(message)
       ).serializable_hash
-      MessagesChannel.broadcast_to conversation, serialized_data
-      UsersChannel.broadcast_to user, serialized_data
+      # MessagesChannel.broadcast_to conversation, serialized_data
+      ActionCable.server.broadcast 'messages', serialized_data
       head :ok
     end
   end
@@ -17,6 +17,6 @@ class Api::V1::MessagesController < ApplicationController
   private
 
   def message_params
-    params.permit(:text, :user_id, :conversation_id)
+    params.permit(:content, :user_id, :conversation_id)
   end
 end
