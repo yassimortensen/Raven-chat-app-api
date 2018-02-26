@@ -11,6 +11,7 @@ class Api::V1::UsersController < ApplicationController
     if foundUser
       render json: foundUser
     else
+      user.save
       render json: user
     end
   end
